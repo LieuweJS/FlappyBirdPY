@@ -14,7 +14,6 @@ class Player(object):
     gravity = 0.3
     lift = -7
     velocity = 0
-    status = 'alive'
     def updatePosition(self):
         self.velocity += self.gravity;
         self.y += self.velocity;
@@ -58,8 +57,7 @@ def main():
             if pipe.x <=0:
                 del pipes[0]
         if player.y <= 0 or player.y >= 400:
-            player.status = 'dead'
-            pg.quit() 
+            pg.quit()
         pressed = pg.key.get_pressed()
         if totalFrames % 5 == 0:
           if pressed[pg.K_SPACE]:
