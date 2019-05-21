@@ -8,7 +8,7 @@ canvasHeight = 400
 pipes = []
 
 class Player(object):
-    x = canvasWidth/2
+    x = canvasWidth/4
     y = canvasHeight/2
     size = 50
     gravity = 0.3
@@ -31,7 +31,7 @@ class Pipe(object):
         self.pipeHeight =  math.floor(random.random() * 250)
         self.bottomHeight = self.pipeHeight + 150
         self.width = 20
-        self.x = canvasWidth -self.width
+        self.x = canvasWidth - self.width
 
 def main():
     pg.init()
@@ -49,13 +49,15 @@ def main():
             break
         canvas.fill((0, 200, 255))
         pg.draw.ellipse(canvas, playerColor, (player.x, player.y, player.size, player.size))
-        #draw the pipes
         for pipe in pipes:
-            pg.draw.rect(canvas,(0,200,0),(pipe.x, 0, pipe.width, pipe.pipeHeight))
-            pg.draw.rect(canvas,(0,200,0),(pipe.x, pipe.bottomHeight, pipe.width, canvasHeight - pipe.bottomHeight))
-            pipe.x -= 2;
             if pipe.x <=0:
                 del pipes[0]
+            pg.draw.rect(canvas,(0,200,0),(pipe.x, 0, pipe.width, pipe.pipeHeight))
+            pg.draw.rect(canvas,(0,200,0),(pipe.x, pipe.bottomHeight, pipe.width, canvasHeight - pipe.bottomHeight))
+            pipe.x -= 1;
+            if player.y > pipe.bottomHeight or player.y < pipe.pipeHeight:
+                if player.x >= pipe.x and player.x <= (pipe.x + pipe.width):
+                    pg.quit()
         if player.y <= 0 or player.y >= 400:
             pg.quit()
         pressed = pg.key.get_pressed()
