@@ -1,6 +1,6 @@
 # PythonLearning
 
-Flappy bird in python.
+Flappy bird in python, using pygame.
 
 May 2019.
 
