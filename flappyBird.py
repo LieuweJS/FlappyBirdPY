@@ -12,7 +12,7 @@ class Player(object):
     y = canvasHeight/2
     size = 50
     gravity = 0.3
-    lift = -7
+    lift = -4
     velocity = 0
     def updatePosition(self):
         self.velocity += self.gravity;
@@ -35,6 +35,8 @@ class Pipe(object):
 
 def main():
     pg.init()
+    score = 0
+    font = pg.font.SysFont('arial', 15)
     canvas = pg.display.set_mode((canvasWidth, canvasHeight))
     y = canvasHeight/2
     totalFrames = 0
@@ -43,6 +45,7 @@ def main():
     clock = pg.time.Clock()
     pipes.append(Pipe())
     while True:
+        text = font.render('score: '+ str(score), True, (0, 0, 0))
         totalFrames += 1
         ev = pg.event.poll()
         if ev.type == pg.QUIT:
@@ -54,19 +57,21 @@ def main():
                 del pipes[0]
             pg.draw.rect(canvas,(0,200,0),(pipe.x, 0, pipe.width, pipe.pipeHeight))
             pg.draw.rect(canvas,(0,200,0),(pipe.x, pipe.bottomHeight, pipe.width, canvasHeight - pipe.bottomHeight))
-            pipe.x -= 1;
+            pipe.x -= 2;
             if player.y > pipe.bottomHeight or player.y < pipe.pipeHeight:
                 if player.x >= pipe.x and player.x <= (pipe.x + pipe.width):
                     pg.quit()
         if player.y <= 0 or player.y >= 400:
             pg.quit()
         pressed = pg.key.get_pressed()
-        if totalFrames % 5 == 0:
+        if totalFrames % 3 == 0:
           if pressed[pg.K_SPACE]:
               player.flap()
         player.updatePosition()
         if totalFrames % 120 == 0:
             pipes.append(Pipe())
+        canvas.blit(text,(1,1))
+        score += 1
         pg.display.flip()
         clock.tick(60)
     pg.quit()
