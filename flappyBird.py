@@ -12,7 +12,7 @@ class Player(object):
     y = canvasHeight/2
     size = 50
     gravity = 0.3
-    lift = -8
+    lift = -7
     velocity = 0
     status = 'alive'
     def updatePosition(self):
@@ -55,11 +55,15 @@ def main():
             pg.draw.rect(canvas,(0,200,0),(pipe.x, 0, pipe.width, pipe.pipeHeight))
             pg.draw.rect(canvas,(0,200,0),(pipe.x, pipe.bottomHeight, pipe.width, canvasHeight - pipe.bottomHeight))
             pipe.x -= 2;
+            if pipe.x <=0:
+                del pipes[0]
         pressed = pg.key.get_pressed()
         if totalFrames % 5 == 0:
           if pressed[pg.K_SPACE]:
               player.flap()
         player.updatePosition()
+        if totalFrames % 120 == 0:
+            pipes.append(Pipe())
         pg.display.flip()
         clock.tick(60)
     pg.quit()
