@@ -30,7 +30,7 @@ class Player(object):
 class Pipe(object):
     def __init__(self):
         self.pipeHeight =  math.floor(random.random() * 250)
-        self.bottomHeight = self.pipeHeight + 100
+        self.bottomHeight = self.pipeHeight + 150
         self.width = 20
         self.x = canvasWidth -self.width
 
@@ -54,6 +54,7 @@ def main():
         for pipe in pipes:
             pg.draw.rect(canvas,(0,200,0),(pipe.x, 0, pipe.width, pipe.pipeHeight))
             pg.draw.rect(canvas,(0,200,0),(pipe.x, pipe.bottomHeight, pipe.width, canvasHeight - pipe.bottomHeight))
+            pipe.x -= 2;
         pressed = pg.key.get_pressed()
         if totalFrames % 5 == 0:
           if pressed[pg.K_SPACE]:
