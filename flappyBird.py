@@ -57,6 +57,9 @@ def main():
             pipe.x -= 2;
             if pipe.x <=0:
                 del pipes[0]
+        if player.y <= 0 or player.y >= 400:
+            player.status = 'dead'
+            pg.quit() 
         pressed = pg.key.get_pressed()
         if totalFrames % 5 == 0:
           if pressed[pg.K_SPACE]:
